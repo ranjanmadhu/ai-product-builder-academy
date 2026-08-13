@@ -1,0 +1,1050 @@
+<div class="min-h-screen bg-[#F9F7F2] text-[#1A1A1A] font-serif selection:bg-[#B38B59]/30 border-8 md:border-[16px] border-[#1A1A1A] flex flex-col overflow-hidden">
+  
+  <!-- Header (Mobile Only) -->
+  <header class="lg:hidden bg-[#F9F7F2] border-b-2 border-[#1A1A1A] p-4 flex justify-between items-end shrink-0 z-10">
+    <div>
+      <p class="uppercase tracking-[0.2em] text-[8px] font-sans font-bold mb-1 text-[#4A4A4A]">Blueprint Series // Vol. 01</p>
+      <h1 class="text-2xl font-black leading-none tracking-tight uppercase">{{ introData.title }}</h1>
+    </div>
+    <div class="text-right">
+      <mat-icon class="text-[#1A1A1A]">school</mat-icon>
+    </div>
+  </header>
+
+  <div class="w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row flex-1 overflow-hidden">
+    
+    <!-- Sidebar / Master List -->
+    <aside class="w-full lg:w-80 lg:shrink-0 h-full border-r-2 border-[#1A1A1A] bg-[#F9F7F2] flex flex-col z-10 overflow-hidden">
+      
+      <!-- Desktop Header -->
+      <div class="hidden lg:flex flex-col p-8 border-b-2 border-[#1A1A1A] bg-[#F9F7F2]">
+        <p class="uppercase tracking-[0.2em] text-[9px] font-sans font-bold mb-3 text-[#4A4A4A]">Blueprint Series // Vol. 01</p>
+        <h1 class="text-4xl font-black leading-none tracking-tight uppercase">{{ introData.title }}</h1>
+        <p class="text-[10px] text-[#4A4A4A] font-sans font-bold uppercase tracking-widest mt-6 border-l-2 border-[#B38B59] pl-3">{{ introData.subtitle }}</p>
+      </div>
+
+      <!-- Navigation List -->
+      <nav class="flex-1 overflow-y-auto p-6 space-y-3">
+        
+        <!-- Intro Button -->
+        <button 
+          (click)="selectItem('intro')"
+          class="w-full text-left px-5 py-4 transition-all flex items-center justify-between group cursor-pointer border"
+          [class.bg-[#1A1A1A]]="selection() === 'intro'"
+          [class.text-[#F9F7F2]]="selection() === 'intro'"
+          [class.border-[#1A1A1A]]="selection() === 'intro'"
+          [class.bg-transparent]="selection() !== 'intro'"
+          [class.text-[#1A1A1A]]="selection() !== 'intro'"
+          [class.border-transparent]="selection() !== 'intro'"
+          [class.hover:border-[#1A1A1A]]="selection() !== 'intro'"
+        >
+          <span class="font-sans font-black text-xs uppercase tracking-widest">Part 01: Intro</span>
+          <mat-icon class="text-[18px] w-[18px] h-[18px]" [class.text-[#B38B59]]="selection() === 'intro'">menu_book</mat-icon>
+        </button>
+
+        <div class="pt-8 pb-3 px-5 text-[9px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] border-b border-[#1A1A1A] mb-3">
+          Part 02: The 7 Patterns
+        </div>
+
+        <!-- Pattern Buttons -->
+        @for (pattern of patternsList; track pattern.id) {
+          <button 
+            (click)="selectItem(pattern.id)"
+            class="w-full text-left px-5 py-4 transition-all flex items-center gap-4 group cursor-pointer border"
+            [class.bg-[#1A1A1A]]="selection() === pattern.id"
+            [class.text-[#F9F7F2]]="selection() === pattern.id"
+            [class.border-[#1A1A1A]]="selection() === pattern.id"
+            [class.bg-transparent]="selection() !== pattern.id"
+            [class.text-[#1A1A1A]]="selection() !== pattern.id"
+            [class.border-transparent]="selection() !== pattern.id"
+            [class.hover:border-[#1A1A1A]]="selection() !== pattern.id"
+          >
+            <div 
+              class="w-6 h-6 flex items-center justify-center text-[10px] font-sans font-black border transition-colors shrink-0"
+              [class.bg-[#F9F7F2]]="selection() === pattern.id"
+              [class.text-[#1A1A1A]]="selection() === pattern.id"
+              [class.border-[#F9F7F2]]="selection() === pattern.id"
+              [class.bg-transparent]="selection() !== pattern.id"
+              [class.text-[#1A1A1A]]="selection() !== pattern.id"
+              [class.border-[#1A1A1A]]="selection() !== pattern.id"
+            >
+              0{{ $index + 1 }}
+            </div>
+            <span class="font-sans font-bold text-xs uppercase tracking-wider truncate">{{ pattern.title.split('. ')[1] }}</span>
+          </button>
+        }
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 bg-[#F9F7F2] h-full overflow-y-auto">
+      <div class="max-w-5xl mx-auto p-8 lg:p-12 xl:p-16">
+        
+        <!-- INTRO VIEW -->
+        @if (selection() === 'intro') {
+          <div class="animate-in fade-in duration-500">
+            
+            <!-- Original Philosophy Section -->
+            <h2 class="text-xs font-sans font-black uppercase tracking-tighter mb-8 py-1 px-2 bg-[#1A1A1A] text-[#F9F7F2] inline-block">
+              PART 01: THE PHILOSOPHY
+            </h2>
+            
+            <h3 class="text-5xl lg:text-7xl font-black text-[#1A1A1A] tracking-tight font-serif uppercase mb-8 leading-[1.05]">
+              AI vs. Traditional <br class="hidden xl:block"/>System Design
+            </h3>
+            
+            <p class="text-xl lg:text-2xl font-serif italic text-[#4A4A4A] leading-relaxed mb-16 border-l-4 border-[#B38B59] pl-6 py-2">
+              {{ introData.philosophy }}
+            </p>
+
+            <div class="grid xl:grid-cols-2 gap-12 xl:gap-16 mb-20">
+              <!-- Traditional Column -->
+              <div class="space-y-8">
+                <h3 class="text-2xl lg:text-3xl font-serif italic mb-6 border-b-2 border-[#1A1A1A] pb-4 text-[#1A1A1A]">
+                  The Deterministic Past
+                </h3>
+                <ul class="space-y-8">
+                  @for (item of introData.traditional; track item.title) {
+                    <li>
+                      <h4 class="font-sans text-xs font-black uppercase tracking-widest text-[#1A1A1A] mb-2">{{ item.title }}</h4>
+                      <p class="font-serif text-base leading-relaxed text-[#4A4A4A]">{{ item.desc }}</p>
+                    </li>
+                  }
+                </ul>
+              </div>
+
+              <!-- AI Column -->
+              <div class="space-y-8 p-8 lg:p-10 bg-[#EFECE6] border border-[#1A1A1A]">
+                <h3 class="text-2xl lg:text-3xl font-serif italic mb-6 border-b-2 border-[#1A1A1A] pb-4 text-[#1A1A1A]">
+                  The Probabilistic Future
+                </h3>
+                <ul class="space-y-8">
+                  @for (item of introData.ai; track item.title) {
+                    <li>
+                      <h4 class="font-sans text-xs font-black uppercase tracking-widest text-[#1A1A1A] mb-2">{{ item.title }}</h4>
+                      <p class="font-serif text-base leading-relaxed text-[#4A4A4A]">{{ item.desc }}</p>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </div>
+
+            <!-- Golden Rule -->
+            <div class="pt-10 border-t-2 border-[#1A1A1A] mb-32">
+              <p class="text-[10px] font-sans font-black uppercase tracking-[0.2em] mb-6 text-[#1A1A1A]">The Golden Rule:</p>
+              <p class="text-2xl lg:text-4xl leading-tight font-serif italic border-l-4 border-[#B38B59] pl-6 lg:pl-8 text-[#1A1A1A]">
+                "{{ introData.goldenRule }}"
+              </p>
+            </div>
+
+            <!-- Header Section -->
+            <div class="mb-12">
+              <div class="flex items-center gap-4 mb-6">
+                <div class="w-8 h-[2px] bg-[#6C5CE7]"></div>
+                <p class="text-[10px] font-sans font-black uppercase tracking-widest text-[#1A1A1A]">
+                  THE CENTRAL IDEA
+                </p>
+              </div>
+              <h2 class="text-5xl lg:text-7xl font-medium text-[#1A1A1A] tracking-tight mb-4">
+                Same engineering discipline.<br/>
+                <i class="text-[#6C5CE7]">New failure modes.</i>
+              </h2>
+            </div>
+
+            <!-- Two Cards Layout -->
+            <div class="relative flex flex-col lg:flex-row mb-16 border border-[#1A1A1A]">
+              
+              <!-- Card A -->
+              <div class="flex-1 p-10 lg:p-14 bg-[#EFECE6] relative overflow-hidden border-b lg:border-b-0 lg:border-r border-[#1A1A1A]">
+                <div class="absolute top-10 right-10 text-8xl font-serif text-[#1A1A1A] opacity-10 leading-none">A</div>
+                <p class="text-[10px] font-sans font-black uppercase tracking-widest text-[#6C5CE7] mb-10">THE FAMILIAR BACKBONE</p>
+                <h3 class="text-3xl lg:text-4xl font-medium tracking-tight mb-6 text-[#1A1A1A] leading-tight max-w-sm">
+                  Traditional design still carries the load.
+                </h3>
+                <p class="text-base lg:text-lg text-[#4A4A4A] leading-relaxed mb-12 max-w-md font-serif">
+                  APIs, permissions, state, data quality, queues, observability and resilient workflows do not disappear because an LLM is present.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 border border-[#1A1A1A] text-[9px] uppercase font-sans font-black tracking-widest text-[#1A1A1A]">CONTRACTS</span>
+                  <span class="px-3 py-1 border border-[#1A1A1A] text-[9px] uppercase font-sans font-black tracking-widest text-[#1A1A1A]">SECURITY</span>
+                  <span class="px-3 py-1 border border-[#1A1A1A] text-[9px] uppercase font-sans font-black tracking-widest text-[#1A1A1A]">RELIABILITY</span>
+                  <span class="px-3 py-1 border border-[#1A1A1A] text-[9px] uppercase font-sans font-black tracking-widest text-[#1A1A1A]">UX</span>
+                </div>
+              </div>
+
+              <!-- Center Plus Badge -->
+              <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-[#6C5CE7] rounded-full flex items-center justify-center text-white text-3xl font-light z-10 hidden lg:flex">
+                +
+              </div>
+
+              <!-- Card B -->
+              <div class="flex-1 p-10 lg:p-14 bg-[#1A1A1A] text-[#F9F7F2] relative overflow-hidden">
+                <div class="absolute top-10 right-10 text-8xl font-serif text-[#F9F7F2] opacity-10 leading-none">B</div>
+                <p class="text-[10px] font-sans font-black uppercase tracking-widest text-[#6C5CE7] mb-10">THE NEW DESIGN LAYER</p>
+                <h3 class="text-3xl lg:text-4xl font-medium tracking-tight mb-6 leading-tight max-w-sm">
+                  You now engineer for uncertainty.
+                </h3>
+                <p class="text-base lg:text-lg text-[#A0A0A0] leading-relaxed mb-12 max-w-md font-serif">
+                  Outputs vary, evidence can be weak, natural language is ambiguous, and a fluent response can be confidently wrong.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 border border-[#F9F7F2]/30 text-[9px] uppercase font-sans font-black tracking-widest text-[#F9F7F2]">GROUNDING</span>
+                  <span class="px-3 py-1 border border-[#F9F7F2]/30 text-[9px] uppercase font-sans font-black tracking-widest text-[#F9F7F2]">GUARDRAILS</span>
+                  <span class="px-3 py-1 border border-[#F9F7F2]/30 text-[9px] uppercase font-sans font-black tracking-widest text-[#F9F7F2]">EVALS</span>
+                  <span class="px-3 py-1 border border-[#F9F7F2]/30 text-[9px] uppercase font-sans font-black tracking-widest text-[#F9F7F2]">HUMAN REVIEW</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- FBGCEO Strip -->
+            <div class="flex flex-col xl:flex-row border-y border-[#1A1A1A]">
+              <!-- Title Block -->
+              <div class="xl:w-64 bg-[#D3F971] p-6 lg:p-8 flex flex-col justify-between shrink-0 border-b xl:border-b-0 xl:border-r border-[#1A1A1A]">
+                <p class="text-[8px] font-sans font-black uppercase tracking-widest text-[#1A1A1A] mb-8">
+                  USE THIS FOR<br/>EVERY CHALLENGE
+                </p>
+                <h4 class="font-sans font-black text-[#1A1A1A] text-lg leading-tight">
+                  The F·B·G·C·E·O<br/>thinking loop
+                </h4>
+              </div>
+              
+              <!-- Steps Grid -->
+              <div class="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 divide-y md:divide-y-0 md:divide-x border-[#1A1A1A]">
+                
+                <!-- 1 -->
+                <div class="p-6 bg-white flex flex-col">
+                  <span class="text-[9px] font-sans font-bold text-[#6C5CE7] mb-4">1</span>
+                  <h5 class="font-sans font-bold text-[#1A1A1A] text-sm mb-2">Frame</h5>
+                  <p class="text-[10px] text-[#4A4A4A] font-serif leading-relaxed">User decision, task and harm</p>
+                </div>
+                
+                <!-- 2 -->
+                <div class="p-6 bg-white flex flex-col">
+                  <span class="text-[9px] font-sans font-bold text-[#6C5CE7] mb-4">2</span>
+                  <h5 class="font-sans font-bold text-[#1A1A1A] text-sm mb-2">Bound</h5>
+                  <p class="text-[10px] text-[#4A4A4A] font-serif leading-relaxed">Capabilities and non-goals</p>
+                </div>
+                
+                <!-- 3 -->
+                <div class="p-6 bg-white flex flex-col">
+                  <span class="text-[9px] font-sans font-bold text-[#6C5CE7] mb-4">3</span>
+                  <h5 class="font-sans font-bold text-[#1A1A1A] text-sm mb-2">Ground</h5>
+                  <p class="text-[10px] text-[#4A4A4A] font-serif leading-relaxed">Data, tools and provenance</p>
+                </div>
+                
+                <!-- 4 -->
+                <div class="p-6 bg-white flex flex-col">
+                  <span class="text-[9px] font-sans font-bold text-[#6C5CE7] mb-4">4</span>
+                  <h5 class="font-sans font-bold text-[#1A1A1A] text-sm mb-2">Control</h5>
+                  <p class="text-[10px] text-[#4A4A4A] font-serif leading-relaxed">Validation, permissions, humans</p>
+                </div>
+                
+                <!-- 5 -->
+                <div class="p-6 bg-white flex flex-col">
+                  <span class="text-[9px] font-sans font-bold text-[#6C5CE7] mb-4">5</span>
+                  <h5 class="font-sans font-bold text-[#1A1A1A] text-sm mb-2">Evaluate</h5>
+                  <p class="text-[10px] text-[#4A4A4A] font-serif leading-relaxed">Cases, metrics and thresholds</p>
+                </div>
+                
+                <!-- 6 -->
+                <div class="p-6 bg-white flex flex-col">
+                  <span class="text-[9px] font-sans font-bold text-[#6C5CE7] mb-4">6</span>
+                  <h5 class="font-sans font-bold text-[#1A1A1A] text-sm mb-2">Operate</h5>
+                  <p class="text-[10px] text-[#4A4A4A] font-serif leading-relaxed">Cost, latency, drift and feedback</p>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        }
+
+        <!-- PATTERN VIEW -->
+        @if (selectedPattern(); as pattern) {
+          <div class="animate-in fade-in duration-500">
+            
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline mb-8 border-b-2 border-[#1A1A1A] pb-4 gap-4">
+              <div class="text-xs font-sans font-black uppercase tracking-tighter py-1 px-2 bg-[#B38B59] text-white">
+                PART 02: ARCHITECTURE PATTERNS
+              </div>
+              <p class="font-sans text-[10px] uppercase font-bold text-[#4A4A4A] tracking-widest">
+                Blueprint // {{ pattern.id }}
+              </p>
+            </div>
+
+            <h2 class="text-4xl lg:text-5xl xl:text-7xl font-black text-[#1A1A1A] tracking-tight font-serif uppercase mb-10 leading-none">
+              {{ pattern.title }}
+            </h2>
+
+            <!-- Problem Statement -->
+            <div class="bg-[#EFECE6] p-8 lg:p-10 border border-[#1A1A1A] mb-16 relative">
+              <div class="absolute top-0 right-0 p-3 border-l border-b border-[#1A1A1A] text-[9px] font-mono opacity-60">
+                PROBLEM_STATEMENT
+              </div>
+              <h3 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] border-b border-[#1A1A1A] pb-2 mb-6 inline-block">The Problem</h3>
+              <p class="font-serif text-xl lg:text-2xl leading-relaxed text-[#1A1A1A] italic">
+                {{ pattern.problem }}
+              </p>
+            </div>
+
+            <div class="grid xl:grid-cols-12 gap-16 xl:gap-20">
+              
+              <!-- Main Column (Tabs) -->
+              <div class="xl:col-span-7 space-y-10">
+                
+                <!-- Tabs Navigation -->
+                <div class="flex gap-8 border-b-2 border-[#1A1A1A] mb-10 overflow-x-auto">
+                  <button (click)="activeTab.set('plan')" class="pb-3 text-xs font-sans font-black uppercase tracking-widest border-b-4 transition-colors whitespace-nowrap" [class.border-[#1A1A1A]]="activeTab() === 'plan'" [class.text-[#1A1A1A]]="activeTab() === 'plan'" [class.border-transparent]="activeTab() !== 'plan'" [class.text-[#4A4A4A]]="activeTab() !== 'plan'">Build Plan</button>
+                  <button (click)="activeTab.set('failure')" class="pb-3 text-xs font-sans font-black uppercase tracking-widest border-b-4 transition-colors whitespace-nowrap" [class.border-[#1A1A1A]]="activeTab() === 'failure'" [class.text-[#1A1A1A]]="activeTab() === 'failure'" [class.border-transparent]="activeTab() !== 'failure'" [class.text-[#4A4A4A]]="activeTab() !== 'failure'">Failure Lab</button>
+                  <button (click)="activeTab.set('eval')" class="pb-3 text-xs font-sans font-black uppercase tracking-widest border-b-4 transition-colors whitespace-nowrap" [class.border-[#1A1A1A]]="activeTab() === 'eval'" [class.text-[#1A1A1A]]="activeTab() === 'eval'" [class.border-transparent]="activeTab() !== 'eval'" [class.text-[#4A4A4A]]="activeTab() !== 'eval'">Evaluation</button>
+                </div>
+                
+                <div class="animate-in fade-in duration-300">
+                  @if (activeTab() === 'plan') {
+                    <div class="relative pl-8 ml-3 space-y-12 border-l border-dashed border-[#1A1A1A]">
+                      @for (step of pattern.architecture; track step.step) {
+                        <div class="relative">
+                          <!-- Node Indicator -->
+                          <div class="absolute -left-[38px] top-1.5 w-4 h-4 bg-[#1A1A1A] transform rotate-45"></div>
+                          
+                          <h4 class="font-sans text-xs font-black uppercase tracking-widest text-[#1A1A1A] mb-3">{{ step.step }}</h4>
+                          <p class="font-serif text-base lg:text-lg leading-relaxed text-[#4A4A4A]">{{ step.description }}</p>
+                        </div>
+                      }
+                    </div>
+                  }
+
+                  @if (activeTab() === 'failure') {
+                    <div class="space-y-8">
+                      @for (lab of pattern.failureLab; track lab.title) {
+                        <div class="border-2 border-red-900 bg-[#FDF8F8] p-6 relative">
+                          <div class="absolute -top-3 -left-3 bg-red-900 text-white w-6 h-6 flex items-center justify-center transform rotate-12">
+                            <mat-icon class="text-[14px] w-[14px] h-[14px]">warning</mat-icon>
+                          </div>
+                          <h4 class="font-sans text-xs font-black uppercase tracking-widest text-red-900 mb-3">{{ lab.title }}</h4>
+                          <p class="font-serif text-base lg:text-lg leading-relaxed text-[#4A4A4A]">{{ lab.description }}</p>
+                        </div>
+                      }
+                    </div>
+                  }
+
+                  @if (activeTab() === 'eval') {
+                    <div class="space-y-8">
+                      @for (evaluation of pattern.evaluation; track evaluation.metric) {
+                        <div class="border-l-4 border-[#3478D4] pl-6 py-2">
+                          <h4 class="font-sans text-xs font-black uppercase tracking-widest text-[#1A1A1A] mb-3 flex items-center gap-2">
+                            <mat-icon class="text-[16px] w-4 h-4 text-[#3478D4]">analytics</mat-icon>
+                            {{ evaluation.metric }}
+                          </h4>
+                          <p class="font-serif text-base lg:text-lg leading-relaxed text-[#4A4A4A]">{{ evaluation.description }}</p>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <!-- Sidebar Data (Mindset & Skills) -->
+              <div class="xl:col-span-5 space-y-12">
+                
+                <!-- AI Mindset -->
+                <div class="border-2 border-[#1A1A1A] p-8 bg-[#1A1A1A] text-[#F9F7F2] relative">
+                  <div class="absolute top-0 right-0 p-3 border-l border-b border-[#F9F7F2] text-[9px] font-mono opacity-50">
+                    REF: MINDSET
+                  </div>
+                  <h3 class="text-[11px] font-sans font-bold uppercase tracking-[0.2em] mb-6 text-[#B38B59] flex items-center gap-3">
+                    <mat-icon class="text-[18px] w-[18px] h-[18px]">lightbulb</mat-icon>
+                    The AI Mindset
+                  </h3>
+                  <p class="font-serif text-base leading-relaxed italic text-[#EFECE6]">
+                    {{ pattern.mindset }}
+                  </p>
+                </div>
+
+                <!-- Key Skills -->
+                <div>
+                  <h3 class="text-[11px] font-sans font-bold uppercase tracking-[0.2em] border-b border-[#1A1A1A] pb-3 mb-6 text-[#1A1A1A]">
+                    Key Skills Required
+                  </h3>
+                  <div class="flex flex-wrap gap-3">
+                    @for (skill of pattern.skills; track skill) {
+                      <span class="inline-block px-4 py-2 border border-[#1A1A1A] text-[#1A1A1A] text-[10px] font-sans font-black uppercase tracking-widest bg-transparent">
+                        {{ skill }}
+                      </span>
+                    }
+                  </div>
+                </div>
+
+                <!-- System Design Delta -->
+                <div class="border-2 border-[#1A1A1A] bg-white relative">
+                  <div class="absolute top-0 right-0 p-2 border-l border-b border-[#1A1A1A] text-[9px] font-mono opacity-50 bg-[#F9F7F2]">
+                    DELTA
+                  </div>
+                  <div class="p-6 border-b border-[#1A1A1A] bg-[#EFECE6]">
+                    <h3 class="text-[11px] font-sans font-bold uppercase tracking-[0.2em] text-[#1A1A1A]">
+                      System Design Delta
+                    </h3>
+                    <p class="font-serif text-sm italic text-[#4A4A4A] mt-1">What stays. What changes.</p>
+                  </div>
+                  <div class="p-6 border-b border-[#1A1A1A]">
+                    <h4 class="text-[9px] font-sans font-black uppercase tracking-widest text-[#1A1A1A] mb-4">Keep</h4>
+                    <ul class="space-y-3">
+                      @for (item of pattern.compare.keep; track item) {
+                        <li class="flex items-start gap-3 text-sm font-serif text-[#4A4A4A]">
+                          <div class="w-1.5 h-1.5 bg-[#1A1A1A] transform rotate-45 mt-1.5 shrink-0"></div>
+                          {{ item }}
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                  <div class="p-6 bg-[#1A1A1A] text-[#F9F7F2]">
+                    <h4 class="text-[9px] font-sans font-black uppercase tracking-widest text-[#B38B59] mb-4">Add</h4>
+                    <ul class="space-y-3">
+                      @for (item of pattern.compare.add; track item) {
+                        <li class="flex items-start gap-3 text-sm font-serif text-[#EFECE6]">
+                          <div class="w-1.5 h-1.5 bg-[#B38B59] transform rotate-45 mt-1.5 shrink-0"></div>
+                          {{ item }}
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            @if (pattern.id === 'data-structurer') {
+              <div class="mt-20 pt-16 border-t-2 border-[#1A1A1A]">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline mb-8 pb-4 gap-4">
+                  <h3 class="text-3xl lg:text-5xl font-black text-[#1A1A1A] tracking-tight font-serif uppercase leading-none">
+                    Live Demo
+                  </h3>
+                  <div class="text-[9px] font-mono uppercase bg-[#1A1A1A] text-white px-3 py-1">
+                    EXEC: 4.0_STRUCT
+                  </div>
+                </div>
+
+                <div class="mb-10 p-6 bg-[#EFECE6] border-l-4 border-[#B38B59]">
+                  <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] mb-2">How to use</h4>
+                  <p class="font-serif text-base text-[#4A4A4A] leading-relaxed">
+                    Type a messy, unstructured customer complaint into the left panel and click 'Structure Data'. The backend will use Gemini to enforce a strict JSON schema, extracting the sentiment, order ID, and categorizing the issue without brittle regex.
+                  </p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                  <!-- Input Side -->
+                  <div class="flex flex-col border-2 border-[#1A1A1A] bg-white relative">
+                    <div class="absolute top-0 right-0 p-2 border-l border-b border-[#1A1A1A] text-[9px] font-mono opacity-50 bg-[#F9F7F2]">
+                      INPUT_UNSTRUCTURED
+                    </div>
+                    <div class="p-4 border-b border-[#1A1A1A] bg-[#EFECE6]">
+                      <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A]">
+                        Human Text
+                      </h4>
+                    </div>
+                    <textarea 
+                      class="w-full h-48 p-6 font-serif text-lg leading-relaxed text-[#1A1A1A] bg-transparent resize-none focus:outline-none focus:ring-0"
+                      [value]="demoInput()"
+                      (input)="updateDemoInput($event)"
+                      placeholder="Enter messy text here..."></textarea>
+                    
+                    <div class="p-4 border-t border-[#1A1A1A] bg-[#F9F7F2] flex justify-end">
+                      <button 
+                        (click)="runDataStructurer()"
+                        [disabled]="demoIsLoading()"
+                        class="px-6 py-3 bg-[#1A1A1A] text-white font-sans font-black text-[10px] uppercase tracking-widest hover:bg-[#B38B59] transition-colors disabled:opacity-50 flex items-center gap-2">
+                        @if (demoIsLoading()) {
+                          <mat-icon class="animate-spin text-[16px] w-4 h-4">refresh</mat-icon>
+                          Processing
+                        } @else {
+                          <mat-icon class="text-[16px] w-4 h-4">bolt</mat-icon>
+                          Structure Data
+                        }
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Output Side -->
+                  <div class="flex flex-col border-2 border-[#1A1A1A] bg-[#1A1A1A] relative">
+                    <div class="absolute top-0 right-0 p-2 border-l border-b border-[#4A4A4A] text-[9px] font-mono text-[#4A4A4A]">
+                      OUTPUT_JSON
+                    </div>
+                    <div class="p-4 border-b border-[#4A4A4A]">
+                      <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-white">
+                        Structured Output
+                      </h4>
+                    </div>
+                    <div class="p-6 h-48 overflow-y-auto font-mono text-sm leading-relaxed text-[#00FF00]">
+                      @if (demoError()) {
+                        <span class="text-red-400">{{ demoError() }}</span>
+                      } @else if (demoOutput()) {
+                        <pre class="whitespace-pre-wrap">{{ demoOutput() }}</pre>
+                      } @else if (demoIsLoading()) {
+                        <span class="text-[#B38B59] animate-pulse">Running guardrails... establishing JSON schema... calling model...</span>
+                      } @else {
+                        <span class="text-[#4A4A4A]">Awaiting input execution...</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Code Implementation Block -->
+                <div class="border-2 border-[#1A1A1A] bg-[#1A1A1A] flex flex-col relative overflow-hidden">
+                  <div class="absolute top-0 right-0 p-2 border-l border-b border-[#4A4A4A] text-[9px] font-mono opacity-80 text-white bg-[#1A1A1A]">
+                    SRC: SERVER.TS
+                  </div>
+                  <div class="p-4 border-b border-[#4A4A4A]">
+                    <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#B38B59] flex items-center gap-2">
+                      <mat-icon class="text-[16px] w-4 h-4">code</mat-icon>
+                      Backend Implementation Code
+                    </h4>
+                  </div>
+                  <div class="p-6 overflow-x-auto">
+                    <pre class="font-mono text-xs leading-relaxed text-[#F9F7F2]">{{ structurerCodeSnippet }}</pre>
+                  </div>
+                </div>
+
+              </div>
+            }
+
+            @if (pattern.id === 'voice-notes') {
+              <div class="mt-20 pt-16 border-t-2 border-[#1A1A1A]">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline mb-8 pb-4 gap-4">
+                  <h3 class="text-3xl lg:text-5xl font-black text-[#1A1A1A] tracking-tight font-serif uppercase leading-none">
+                    Live Demo
+                  </h3>
+                  <div class="text-[9px] font-mono uppercase bg-[#1A1A1A] text-white px-3 py-1">
+                    EXEC: 3.0_VOICE
+                  </div>
+                </div>
+
+                <div class="mb-10 p-6 bg-[#EFECE6] border-l-4 border-[#B38B59]">
+                  <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] mb-2">How to use</h4>
+                  <p class="font-serif text-base text-[#4A4A4A] leading-relaxed">
+                    Click the record button and speak a brief note (e.g., 'Hey team, just finished the meeting. Please send the finalized deck to marketing and let's schedule a follow-up for tomorrow.'). Click stop to process. Gemini will natively process the audio buffer and output a structured transcript, summary, and action items.
+                  </p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                  <!-- Input Side -->
+                  <div class="flex flex-col border-2 border-[#1A1A1A] bg-white relative">
+                    <div class="absolute top-0 right-0 p-2 border-l border-b border-[#1A1A1A] text-[9px] font-mono opacity-50 bg-[#F9F7F2]">
+                      INPUT_MIC
+                    </div>
+                    <div class="p-4 border-b border-[#1A1A1A] bg-[#EFECE6]">
+                      <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A]">
+                        Audio Capture
+                      </h4>
+                    </div>
+                    
+                    <div class="flex-1 p-8 flex flex-col items-center justify-center min-h-[250px] bg-[#F9F7F2]">
+                      <button 
+                        (click)="toggleRecording()"
+                        [disabled]="voiceIsLoading()"
+                        class="w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all duration-300 disabled:opacity-50 outline-none"
+                        [class.border-[#1A1A1A]]="!isRecording()"
+                        [class.bg-white]="!isRecording()"
+                        [class.border-red-600]="isRecording()"
+                        [class.bg-red-50]="isRecording()">
+                        
+                        @if (isRecording()) {
+                          <div class="w-8 h-8 rounded bg-red-600 animate-pulse"></div>
+                        } @else if (voiceIsLoading()) {
+                          <mat-icon class="text-[32px] w-8 h-8 text-[#1A1A1A] animate-spin">refresh</mat-icon>
+                        } @else {
+                          <div class="w-8 h-8 rounded-full bg-[#1A1A1A]"></div>
+                        }
+                      </button>
+                      
+                      <div class="mt-8 text-center">
+                        @if (isRecording()) {
+                          <p class="font-sans text-[10px] font-black uppercase tracking-[0.2em] text-red-600 animate-pulse">Recording...</p>
+                          <p class="font-serif text-base italic text-[#4A4A4A] mt-2">Speak your notes, then click square to stop.</p>
+                        } @else if (voiceIsLoading()) {
+                          <p class="font-sans text-[10px] font-black uppercase tracking-[0.2em] text-[#B38B59]">Processing Audio</p>
+                          <p class="font-serif text-base italic text-[#4A4A4A] mt-2">Transcribing and extracting actions...</p>
+                        } @else {
+                          <p class="font-sans text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1A1A]">Ready to Record</p>
+                          <p class="font-serif text-base italic text-[#4A4A4A] mt-2">Click the circle to start.</p>
+                        }
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Output Side -->
+                  <div class="flex flex-col border-2 border-[#1A1A1A] bg-[#F9F7F2] relative">
+                    <div class="absolute top-0 right-0 p-2 border-l border-b border-[#1A1A1A] text-[9px] font-mono opacity-50 bg-white">
+                      OUTPUT_SMART_NOTES
+                    </div>
+                    <div class="p-4 border-b border-[#1A1A1A] bg-[#1A1A1A]">
+                      <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-white">
+                        Extracted Data
+                      </h4>
+                    </div>
+                    
+                    <div class="p-6 overflow-y-auto max-h-[400px]">
+                      @if (voiceError()) {
+                        <div class="p-4 border-2 border-[#1A1A1A] bg-red-50 text-red-700 font-serif text-sm">
+                          {{ voiceError() }}
+                        </div>
+                      } @else if (voiceOutput()) {
+                        <div class="space-y-8">
+                          <div>
+                            <h5 class="text-[9px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] border-b border-[#1A1A1A] pb-1 mb-3">Transcript</h5>
+                            <p class="font-serif text-base leading-relaxed text-[#4A4A4A] italic border-l-2 border-[#B38B59] pl-4 py-1">
+                              "{{ voiceOutput()?.transcript }}"
+                            </p>
+                          </div>
+                          
+                          <div>
+                            <h5 class="text-[9px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] border-b border-[#1A1A1A] pb-1 mb-3">Summary</h5>
+                            <p class="font-serif text-lg leading-relaxed text-[#1A1A1A]">
+                              {{ voiceOutput()?.summary }}
+                            </p>
+                          </div>
+                          
+                          @if (voiceOutput()?.action_items && voiceOutput()?.action_items?.length) {
+                            <div>
+                              <h5 class="text-[9px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] border-b border-[#1A1A1A] pb-1 mb-3">Action Items</h5>
+                              <ul class="space-y-3">
+                                @for (item of voiceOutput()?.action_items; track item) {
+                                  <li class="flex items-start gap-3">
+                                    <div class="w-1.5 h-1.5 bg-[#B38B59] transform rotate-45 mt-2 shrink-0"></div>
+                                    <span class="font-serif text-base text-[#1A1A1A]">{{ item }}</span>
+                                  </li>
+                                }
+                              </ul>
+                            </div>
+                          }
+                        </div>
+                      } @else {
+                        <div class="h-full flex items-center justify-center text-center p-8">
+                          <p class="font-serif text-sm italic text-[#4A4A4A]">Record a voice note to see the transcript, summary, and extracted action items appear here.</p>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Code Implementation Block -->
+                <div class="border-2 border-[#1A1A1A] bg-[#1A1A1A] flex flex-col relative overflow-hidden">
+                  <div class="absolute top-0 right-0 p-2 border-l border-b border-[#4A4A4A] text-[9px] font-mono opacity-80 text-white bg-[#1A1A1A]">
+                    SRC: SERVER.TS
+                  </div>
+                  <div class="p-4 border-b border-[#4A4A4A]">
+                    <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#B38B59] flex items-center gap-2">
+                      <mat-icon class="text-[16px] w-4 h-4">code</mat-icon>
+                      Backend Implementation Code
+                    </h4>
+                  </div>
+                  <div class="p-6 overflow-x-auto">
+                    <pre class="font-mono text-xs leading-relaxed text-[#F9F7F2]">{{ voiceNotesCodeSnippet }}</pre>
+                  </div>
+                </div>
+
+              </div>
+            }
+
+            @if (pattern.id === 'smart-api') {
+              <div class="mt-20 pt-16 border-t-2 border-[#1A1A1A]">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline mb-8 pb-4 gap-4">
+                  <h3 class="text-3xl lg:text-5xl font-black text-[#1A1A1A] tracking-tight font-serif uppercase leading-none">
+                    Live Demo
+                  </h3>
+                  <div class="text-[9px] font-mono uppercase bg-[#1A1A1A] text-white px-3 py-1">
+                    EXEC: 1.0_API
+                  </div>
+                </div>
+
+                <div class="mb-10 p-6 bg-[#EFECE6] border-l-4 border-[#B38B59]">
+                  <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] mb-2">How to use</h4>
+                  <p class="font-serif text-base text-[#4A4A4A] leading-relaxed">
+                    Type a query into the left panel (e.g. "What is the weather in Tokyo?", "Tell me a joke", or "Guess the age for the name Ranjan") and click 'Execute Query'. The model acts as a reasoning engine, deciding which external tool to call to get the necessary data, then returning a final answer.
+                  </p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                  <!-- Input Side -->
+                  <div class="flex flex-col border-2 border-[#1A1A1A] bg-white relative">
+                    <div class="absolute top-0 right-0 p-2 border-l border-b border-[#1A1A1A] text-[9px] font-mono opacity-50 bg-[#F9F7F2]">
+                      INPUT_PROMPT
+                    </div>
+                    <div class="p-4 border-b border-[#1A1A1A] bg-[#EFECE6]">
+                      <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A]">
+                        User Query
+                      </h4>
+                    </div>
+                    <textarea 
+                      class="w-full h-48 p-6 font-serif text-lg leading-relaxed text-[#1A1A1A] bg-transparent resize-none focus:outline-none focus:ring-0"
+                      [value]="apiInput()"
+                      (input)="updateApiInput($event)"
+                      placeholder="Ask for a joke, weather, or predict an age..."></textarea>
+                    
+                    <div class="p-4 border-t border-[#1A1A1A] bg-[#F9F7F2] flex justify-end">
+                      <button 
+                        (click)="runSmartApi()"
+                        [disabled]="apiIsLoading()"
+                        class="px-6 py-3 bg-[#1A1A1A] text-white font-sans font-black text-[10px] uppercase tracking-widest hover:bg-[#B38B59] transition-colors disabled:opacity-50 flex items-center gap-2">
+                        @if (apiIsLoading()) {
+                          <mat-icon class="animate-spin text-[16px] w-4 h-4">refresh</mat-icon>
+                          Reasoning
+                        } @else {
+                          <mat-icon class="text-[16px] w-4 h-4">bolt</mat-icon>
+                          Execute Query
+                        }
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Output Side -->
+                  <div class="flex flex-col border-2 border-[#1A1A1A] bg-[#1A1A1A] relative">
+                    <div class="absolute top-0 right-0 p-2 border-l border-b border-[#4A4A4A] text-[9px] font-mono text-[#4A4A4A]">
+                      OUTPUT_TRACE
+                    </div>
+                    <div class="p-4 border-b border-[#4A4A4A]">
+                      <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-white">
+                        Reasoning Engine Trace
+                      </h4>
+                    </div>
+                    <div class="p-6 h-48 overflow-y-auto font-mono text-sm leading-relaxed text-[#00FF00]">
+                      @if (apiError()) {
+                        <span class="text-red-400">{{ apiError() }}</span>
+                      } @else if (apiOutput()) {
+                        <div class="space-y-4">
+                          @if (apiOutput()?.trace && apiOutput()?.trace?.length) {
+                            <div class="border border-[#4A4A4A] p-3 text-xs bg-[#222]">
+                              <p class="text-[#B38B59] font-bold mb-2">TOOL EXECUTION TRACE:</p>
+                              @for (step of apiOutput()?.trace; track step.type) {
+                                @if (step.type === 'call') {
+                                  <p class="text-blue-400">>> Calling Tool: {{ step.tool }}</p>
+                                  <pre class="pl-4 text-gray-400">{{ step.args | json }}</pre>
+                                } @else if (step.type === 'result') {
+                                  <p class="text-green-400">>> Tool Result:</p>
+                                  <pre class="pl-4 text-gray-400 whitespace-pre-wrap">{{ step.data | json }}</pre>
+                                }
+                              }
+                            </div>
+                          }
+                          <div>
+                            <p class="text-white font-bold mb-1">FINAL RESPONSE:</p>
+                            <p class="text-green-300 whitespace-pre-wrap">{{ apiOutput()?.text }}</p>
+                          </div>
+                        </div>
+                      } @else if (apiIsLoading()) {
+                        <span class="text-[#B38B59] animate-pulse">Analyzing prompt... selecting tool... awaiting execution...</span>
+                      } @else {
+                        <span class="text-[#4A4A4A]">Awaiting input execution...</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Code Implementation Block -->
+                <div class="border-2 border-[#1A1A1A] bg-[#1A1A1A] flex flex-col relative overflow-hidden">
+                  <div class="absolute top-0 right-0 p-2 border-l border-b border-[#4A4A4A] text-[9px] font-mono opacity-80 text-white bg-[#1A1A1A]">
+                    SRC: SERVER.TS
+                  </div>
+                  <div class="p-4 border-b border-[#4A4A4A]">
+                    <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#B38B59] flex items-center gap-2">
+                      <mat-icon class="text-[16px] w-4 h-4">code</mat-icon>
+                      Backend Implementation Code
+                    </h4>
+                  </div>
+                  <div class="p-6 overflow-x-auto">
+                    <pre class="font-mono text-xs leading-relaxed text-[#F9F7F2]">{{ smartApiCodeSnippet }}</pre>
+                  </div>
+                </div>
+
+              </div>
+            }
+
+            @if (pattern.id === 'vision-extractor') {
+              <div class="mt-20 pt-16 border-t-2 border-[#1A1A1A]">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline mb-8 pb-4 gap-4">
+                  <h3 class="text-3xl lg:text-5xl font-black text-[#1A1A1A] tracking-tight font-serif uppercase leading-none">
+                    Live Demo
+                  </h3>
+                  <div class="text-[9px] font-mono uppercase bg-[#1A1A1A] text-white px-3 py-1">
+                    EXEC: 5.0_VISION
+                  </div>
+                </div>
+
+                <div class="mb-10 p-6 bg-[#EFECE6] border-l-4 border-[#B38B59]">
+                  <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] mb-2">How to use</h4>
+                  <p class="font-serif text-base text-[#4A4A4A] leading-relaxed">
+                    Upload an image of a receipt or invoice. The multimodal model reads the pixels and converts them to a structured JSON object enforcing our exact target schema (Merchant, Date, Items, Total).
+                  </p>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-8 mb-12">
+                  <!-- Upload and Preview -->
+                  <div class="w-full lg:w-1/3 flex flex-col gap-4">
+                    <div class="border-2 border-dashed border-[#1A1A1A] p-8 bg-[#F9F7F2] hover:bg-[#EFECE6] transition-colors relative flex flex-col items-center justify-center text-center cursor-pointer min-h-[200px]" onclick="document.getElementById('vision-file-upload').click()">
+                      <mat-icon class="text-4xl mb-4 text-[#1A1A1A]">cloud_upload</mat-icon>
+                      <h4 class="font-sans font-black text-sm uppercase tracking-widest text-[#1A1A1A] mb-2">Select Image</h4>
+                      <p class="font-serif text-xs text-[#4A4A4A]">JPG, PNG, or WEBP up to 10MB</p>
+                      <input id="vision-file-upload" type="file" accept="image/*" class="hidden" (change)="onVisionFileSelected($event)" />
+                    </div>
+
+                    @if (visionImageBase64()) {
+                      <div class="border-2 border-[#1A1A1A] relative group">
+                        <div class="absolute top-0 right-0 bg-[#1A1A1A] text-white text-[9px] font-mono px-2 py-1 z-10 uppercase">
+                          PREVIEW
+                        </div>
+                        <img [src]="'data:' + visionMimeType() + ';base64,' + visionImageBase64()" class="w-full h-auto object-contain max-h-[300px]" referrerpolicy="no-referrer" />
+                        <div class="p-4 bg-white border-t border-[#1A1A1A] flex justify-between items-center">
+                          <button 
+                            (click)="runVisionExtraction()"
+                            [disabled]="visionLoading()"
+                            class="flex-1 bg-[#6C5CE7] hover:bg-[#5A4AD1] text-white py-3 px-4 uppercase font-sans font-black text-[10px] tracking-widest transition-colors flex justify-center items-center gap-2 disabled:opacity-50">
+                            @if (visionLoading()) {
+                              <mat-icon class="animate-spin text-[16px] w-4 h-4">refresh</mat-icon>
+                              Extracting...
+                            } @else {
+                              <mat-icon class="text-[16px] w-4 h-4">document_scanner</mat-icon>
+                              Extract Data
+                            }
+                          </button>
+                        </div>
+                      </div>
+                    }
+                  </div>
+
+                  <!-- Results -->
+                  <div class="w-full lg:w-2/3 border-2 border-[#1A1A1A] bg-white relative">
+                    <div class="absolute top-0 right-0 p-2 border-l border-b border-[#1A1A1A] text-[9px] font-mono opacity-50 bg-[#F9F7F2]">
+                      JSON_SCHEMA_ENFORCED
+                    </div>
+                    <div class="p-4 border-b border-[#1A1A1A] bg-[#EFECE6]">
+                      <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A]">Extracted Data Grid</h4>
+                    </div>
+
+                    <div class="p-8">
+                      @if (visionError()) {
+                        <div class="p-4 border-2 border-red-500 bg-red-50 text-red-700 font-serif text-sm mb-6">
+                          {{ visionError() }}
+                        </div>
+                      }
+
+                      @if (!visionData() && !visionLoading()) {
+                        <div class="h-64 flex flex-col items-center justify-center text-[#A0A0A0]">
+                          <mat-icon class="text-4xl mb-4 opacity-50">table_chart</mat-icon>
+                          <p class="font-serif text-sm">Upload an image and run extraction to see structured data.</p>
+                        </div>
+                      }
+
+                      @if (visionData()) {
+                        <div class="mb-6 grid grid-cols-2 gap-4">
+                          <div class="p-4 bg-[#F9F7F2] border border-[#1A1A1A]">
+                            <p class="text-[9px] font-sans font-black uppercase tracking-widest text-[#4A4A4A] mb-1">Merchant</p>
+                            <p class="font-serif text-lg text-[#1A1A1A]">{{ visionData().merchant || 'Unknown' }}</p>
+                          </div>
+                          <div class="p-4 bg-[#F9F7F2] border border-[#1A1A1A]">
+                            <p class="text-[9px] font-sans font-black uppercase tracking-widest text-[#4A4A4A] mb-1">Date</p>
+                            <p class="font-serif text-lg text-[#1A1A1A]">{{ visionData().date || 'Unknown' }}</p>
+                          </div>
+                        </div>
+
+                        <div class="overflow-x-auto border border-[#1A1A1A]">
+                          <table class="w-full text-left font-serif text-sm">
+                            <thead class="bg-[#1A1A1A] text-white">
+                              <tr>
+                                <th class="p-3 font-sans font-black text-[9px] uppercase tracking-widest">Item Name</th>
+                                <th class="p-3 font-sans font-black text-[9px] uppercase tracking-widest text-right">Qty</th>
+                                <th class="p-3 font-sans font-black text-[9px] uppercase tracking-widest text-right">Price</th>
+                              </tr>
+                            </thead>
+                            <tbody class="divide-y divide-[#EFECE6]">
+                              @for (item of visionData().items; track $index) {
+                                <tr>
+                                  <td class="p-3 text-[#1A1A1A]">{{ item.name }}</td>
+                                  <td class="p-3 text-[#4A4A4A] text-right">{{ item.quantity || 1 }}</td>
+                                  <td class="p-3 text-[#1A1A1A] text-right">${{ item.price | number:'1.2-2' }}</td>
+                                </tr>
+                              }
+                            </tbody>
+                            <tfoot class="bg-[#F9F7F2] border-t-2 border-[#1A1A1A]">
+                              <tr>
+                                <th colspan="2" class="p-3 font-sans font-black text-[10px] uppercase tracking-widest text-right text-[#1A1A1A]">Total</th>
+                                <th class="p-3 font-serif font-bold text-lg text-right text-[#1A1A1A]">${{ visionData().totalAmount | number:'1.2-2' }}</th>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Code Implementation Block -->
+                <div class="border-2 border-[#1A1A1A] bg-[#1A1A1A] flex flex-col relative overflow-hidden">
+                  <div class="absolute top-0 right-0 p-2 border-l border-b border-[#4A4A4A] text-[9px] font-mono opacity-80 text-white bg-[#1A1A1A]">
+                    SRC: SERVER.TS
+                  </div>
+                  <div class="p-4 border-b border-[#4A4A4A]">
+                    <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#B38B59] flex items-center gap-2">
+                      <mat-icon class="text-[16px] w-4 h-4">code</mat-icon>
+                      Backend Implementation Code
+                    </h4>
+                  </div>
+                  <div class="p-6 overflow-x-auto">
+                    <pre class="font-mono text-xs leading-relaxed text-[#F9F7F2]">{{ visionCodeSnippet }}</pre>
+                  </div>
+                </div>
+              </div>
+            }
+
+            @if (pattern.id === 'content-pipeline') {
+              <div class="mt-20 pt-16 border-t-2 border-[#1A1A1A]">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-baseline mb-8 pb-4 gap-4">
+                  <h3 class="text-3xl lg:text-5xl font-black text-[#1A1A1A] tracking-tight font-serif uppercase leading-none">
+                    Live Demo
+                  </h3>
+                  <div class="text-[9px] font-mono uppercase bg-[#1A1A1A] text-white px-3 py-1">
+                    EXEC: 7.0_PIPELINE
+                  </div>
+                </div>
+
+                <div class="mb-10 p-6 bg-[#EFECE6] border-l-4 border-[#B38B59]">
+                  <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] mb-2">How to use</h4>
+                  <p class="font-serif text-base text-[#4A4A4A] leading-relaxed">
+                    Provide a URL (like a Wikipedia article). The system acts as a multi-stage orchestrator: extracting the raw text, passing it to an LLM for synthesis, then writing a blog, and finally drafting tweets. Notice how each node waits for the previous one to complete, passing its state forward.
+                  </p>
+                </div>
+
+                <div class="flex flex-col border-2 border-[#1A1A1A] bg-white relative mb-12">
+                  <div class="absolute top-0 right-0 p-2 border-l border-b border-[#1A1A1A] text-[9px] font-mono opacity-50 bg-[#F9F7F2]">
+                    INPUT_URL
+                  </div>
+                  <div class="p-4 border-b border-[#1A1A1A] bg-[#EFECE6] flex items-center gap-4">
+                    <h4 class="text-[10px] font-sans font-black uppercase tracking-[0.2em] text-[#1A1A1A] whitespace-nowrap">
+                      Source URL
+                    </h4>
+                    <input 
+                      type="text"
+                      class="flex-1 bg-white border border-[#1A1A1A] px-3 py-2 text-sm font-mono focus:outline-none focus:ring-1 focus:ring-[#6C5CE7]"
+                      [value]="pipelineUrl()"
+                      (input)="updatePipelineUrl($event)"
+                      placeholder="https://..."
+                    />
+                    <button 
+                      (click)="runPipeline()"
+                      [disabled]="pipelineActiveStep() > 0"
+                      class="px-6 py-2 bg-[#6C5CE7] text-white font-sans font-black text-[10px] uppercase tracking-widest hover:bg-[#5A4AD1] transition-colors disabled:opacity-50 flex items-center gap-2">
+                      @if (pipelineActiveStep() > 0) {
+                        <mat-icon class="animate-spin text-[16px] w-4 h-4">refresh</mat-icon>
+                        Running
+                      } @else {
+                        <mat-icon class="text-[16px] w-4 h-4">play_arrow</mat-icon>
+                        Start Pipeline
+                      }
+                    </button>
+                  </div>
+                  
+                  <div class="p-8 bg-[#F9F7F2]">
+                    @if (pipelineError()) {
+                      <div class="p-4 border-2 border-red-500 bg-red-50 text-red-700 font-serif text-sm mb-6">
+                        {{ pipelineError() }}
+                      </div>
+                    }
+
+                    <!-- Pipeline Steps UI -->
+                    <div class="grid md:grid-cols-4 gap-4 relative">
+                      
+                      <!-- Step 1: Extract -->
+                      <div class="border-2 border-[#1A1A1A] flex flex-col" [class.opacity-40]="pipelineActiveStep() === 0 && !pipelineText()">
+                        <div class="p-2 border-b border-[#1A1A1A] bg-white flex justify-between items-center">
+                          <span class="text-[9px] font-bold uppercase">1. Extract</span>
+                          @if (pipelineActiveStep() === 1) {
+                            <mat-icon class="animate-spin text-[14px] w-3 h-3 text-[#6C5CE7]">refresh</mat-icon>
+                          } @else if (pipelineText()) {
+                            <mat-icon class="text-[14px] w-3 h-3 text-green-600">check_circle</mat-icon>
+                          }
+                        </div>
+                        <div class="p-3 h-32 overflow-y-auto bg-gray-50 text-[10px] font-mono text-[#4A4A4A]">
+                          @if (pipelineText()) {
+                            {{ pipelineText().substring(0, 200) }}...
+                          } @else if (pipelineActiveStep() === 1) {
+                            <span class="text-[#6C5CE7] animate-pulse">Scraping content...</span>
+                          }
+                        </div>
+                      </div>
+
+                      <!-- Step 2: Summarize -->
+                      <div class="border-2 border-[#1A1A1A] flex flex-col" [class.opacity-40]="pipelineActiveStep() < 2 && !pipelineTakeaways()">
+                        <div class="p-2 border-b border-[#1A1A1A] bg-white flex justify-between items-center">
+                          <span class="text-[9px] font-bold uppercase">2. Synthesize</span>
+                          @if (pipelineActiveStep() === 2) {
+                            <mat-icon class="animate-spin text-[14px] w-3 h-3 text-[#6C5CE7]">refresh</mat-icon>
+                          } @else if (pipelineTakeaways()) {
+                            <mat-icon class="text-[14px] w-3 h-3 text-green-600">check_circle</mat-icon>
+                          }
+                        </div>
+                        <div class="p-3 h-32 overflow-y-auto bg-gray-50 text-[10px] font-serif text-[#1A1A1A] whitespace-pre-wrap">
+                          @if (pipelineTakeaways()) {
+                            {{ pipelineTakeaways() }}
+                          } @else if (pipelineActiveStep() === 2) {
+                            <span class="text-[#6C5CE7] animate-pulse">Analyzing raw text...</span>
+                          }
+                        </div>
+                      </div>
+
+                      <!-- Step 3: Blog -->
+                      <div class="border-2 border-[#1A1A1A] flex flex-col" [class.opacity-40]="pipelineActiveStep() < 3 && !pipelineBlog()">
+                        <div class="p-2 border-b border-[#1A1A1A] bg-white flex justify-between items-center">
+                          <span class="text-[9px] font-bold uppercase">3. Blog Draft</span>
+                          @if (pipelineActiveStep() === 3) {
+                            <mat-icon class="animate-spin text-[14px] w-3 h-3 text-[#6C5CE7]">refresh</mat-icon>
+                          } @else if (pipelineBlog()) {
+                            <mat-icon class="text-[14px] w-3 h-3 text-green-600">check_circle</mat-icon>
+                          }
+                        </div>
+                        <div class="p-3 h-32 overflow-y-auto bg-gray-50 text-[10px] font-serif text-[#1A1A1A] whitespace-pre-wrap">
+                          @if (pipelineBlog()) {
+                            {{ pipelineBlog() }}
+                          } @else if (pipelineActiveStep() === 3) {
+                            <span class="text-[#6C5CE7] animate-pulse">Writing blog post...</span>
+                          }
+                        </div>
+                      </div>
+
+                      <!-- Step 4: Tweet -->
+                      <div class="border-2 border-[#1A1A1A] flex flex-col" [class.opacity-40]="pipelineActiveStep() < 4 && !pipelineTweets()">
+                        <div class="p-2 border-b border-[#1A1A1A] bg-white flex justify-between items-center">
+                          <span class="text-[9px] font-bold uppercase">4. Marketing</span>
+                          @if (pipelineActiveStep() === 4) {
+                            <mat-icon class="animate-spin text-[14px] w-3 h-3 text-[#6C5CE7]">refresh</mat-icon>
+                          } @else if (pipelineTweets()) {
+                            <mat-icon class="text-[14px] w-3 h-3 text-green-600">check_circle</mat-icon>
+                          }
+                        </div>
+                        <div class="p-3 h-32 overflow-y-auto bg-gray-50 text-[10px] font-serif text-[#1A1A1A] whitespace-pre-wrap">
+                          @if (pipelineTweets()) {
+                            {{ pipelineTweets() }}
+                          } @else if (pipelineActiveStep() === 4) {
+                            <span class="text-[#6C5CE7] animate-pulse">Generating threads...</span>
+                          }
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            }
+
+          </div>
+        }
+
+        <footer class='mt-24 pt-8 border-t border-[#1A1A1A] flex flex-col sm:flex-row justify-between items-start sm:items-center font-sans text-[10px] font-bold uppercase tracking-[0.2em] opacity-60 gap-4 pb-8'> 
+          <span>© 2026 Product Builder Academy</span> 
+          <span>Curriculum Module: AI-Architectures-001</span> 
+          <span>Instructional Use Only</span> 
+        </footer>
+
+      </div>
+    </main>
+    
+  </div>
+</div>

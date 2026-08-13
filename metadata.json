@@ -1,0 +1,6 @@
+{
+  "name": "AI Product Builder Academy",
+  "description": "An interactive implementation guide and blueprint for building AI-integrated products.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
