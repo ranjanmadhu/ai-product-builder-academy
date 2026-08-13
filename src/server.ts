@@ -34,6 +34,54 @@ function getAi() {
   return ai;
 }
 
+// Wrapper to handle 429 Quota Exceeded errors with automatic retry and model cycling
+const FALLBACK_MODELS = ['gemini-3.6-flash', 'gemini-3.1-pro-preview', 'gemini-3.1-flash-lite'];
+
+async function generateContentWithRetry(gemini: GoogleGenAI, options: any, maxRetries = 2): Promise<any> {
+  let attempt = 0;
+  let modelIndex = 0;
+  
+  // Try to find if original model was specified, put it first in the cycle
+  const originalModel = options.model;
+  const modelsToTry = [originalModel, ...FALLBACK_MODELS.filter(m => m !== originalModel)].filter(Boolean);
+
+  while (attempt <= maxRetries) {
+    try {
+      options.model = modelsToTry[modelIndex];
+      return await gemini.models.generateContent(options);
+    } catch (error: any) {
+      if ((error?.status === 'RESOURCE_EXHAUSTED' || error?.message?.includes('429'))) {
+        console.warn(`[Quota Exceeded] Model ${modelsToTry[modelIndex]} failed.`);
+        
+        // Cycle to next model
+        modelIndex++;
+        if (modelIndex < modelsToTry.length) {
+          console.warn(`Switching to fallback model: ${modelsToTry[modelIndex]}`);
+          continue; // Try next model immediately
+        }
+        
+        // If all models exhausted, wait and retry the whole cycle
+        if (attempt < maxRetries) {
+          attempt++;
+          modelIndex = 0; // Reset to first model
+          let delayMs = 15000; // default 15s
+          const match = error?.message?.match(/retry in ([\d\.]+)s/i);
+          if (match && match[1]) {
+            delayMs = Math.ceil(parseFloat(match[1]) * 1000) + 1000;
+          }
+          console.warn(`[All models exhausted] Retrying cycle in ${delayMs}ms... (Attempt ${attempt}/${maxRetries})`);
+          await new Promise(r => setTimeout(r, delayMs));
+        } else {
+          throw error;
+        }
+      } else {
+        // Not a 429 error, throw immediately
+        throw error;
+      }
+    }
+  }
+}
+
 app.post('/api/voice-notes', async (req, res) => {
   try {
     const { audioBase64, mimeType } = req.body;
@@ -43,7 +91,7 @@ app.post('/api/voice-notes', async (req, res) => {
     }
 
     const gemini = getAi();
-    const response = await gemini.models.generateContent({
+    const response = await generateContentWithRetry(gemini, {
       model: 'gemini-3.6-flash',
       contents: [
         {
@@ -135,7 +183,7 @@ app.post('/api/smart-assistant', async (req, res) => {
     const trace: Record<string, unknown>[] = [];
 
     // Step 1: Send the initial request with tools
-    const response1 = await gemini.models.generateContent({
+    const response1 = await generateContentWithRetry(gemini, {
       model: 'gemini-3.6-flash',
       contents,
       config: { tools }
@@ -191,7 +239,7 @@ app.post('/api/smart-assistant', async (req, res) => {
         parts: [{ functionResponse: { name: call.name, response: apiResult } }]
       });
 
-      const response2 = await gemini.models.generateContent({
+      const response2 = await generateContentWithRetry(gemini, {
         model: 'gemini-3.6-flash',
         contents,
         config: { tools }
@@ -224,7 +272,7 @@ app.post('/api/structure-data', async (req, res) => {
     const gemini = getAi();
     
     // We enforce a strict schema for extracting customer feedback data
-    const response = await gemini.models.generateContent({
+    const response = await generateContentWithRetry(gemini, {
       model: 'gemini-3.6-flash',
       contents: `Extract the requested data from this messy customer input: "${text}"`,
       config: {
@@ -307,7 +355,7 @@ app.post('/api/pipeline/summarize', async (req, res) => {
   try {
     const { text } = req.body;
     const gemini = getAi();
-    const response = await gemini.models.generateContent({
+    const response = await generateContentWithRetry(gemini, {
       model: 'gemini-3.6-flash',
       contents: `Summarize the following text into exactly 3 key takeaways. Format as a simple bulleted list with no introduction or conclusion.\n\nText:\n${text}`
     });
@@ -322,7 +370,7 @@ app.post('/api/pipeline/blog', async (req, res) => {
   try {
     const { takeaways } = req.body;
     const gemini = getAi();
-    const response = await gemini.models.generateContent({
+    const response = await generateContentWithRetry(gemini, {
       model: 'gemini-3.6-flash',
       contents: `Using the following 3 takeaways, write a ~150 word engaging blog post. Include a catchy title and format with markdown.\n\nTakeaways:\n${takeaways}`
     });
@@ -337,7 +385,7 @@ app.post('/api/pipeline/tweet', async (req, res) => {
   try {
     const { blog } = req.body;
     const gemini = getAi();
-    const response = await gemini.models.generateContent({
+    const response = await generateContentWithRetry(gemini, {
       model: 'gemini-3.6-flash',
       contents: `Based on the following blog post, write 3 promotional Twitter threads (just the first tweet of each thread). Separate each tweet with a blank line. Use appropriate emojis and hashtags.\n\nBlog Post:\n${blog}`
     });
@@ -380,7 +428,7 @@ app.post('/api/vision/extract', async (req, res) => {
       required: ['merchant', 'items', 'totalAmount']
     };
 
-    const response = await gemini.models.generateContent({
+    const response = await generateContentWithRetry(gemini, {
       model: 'gemini-3.6-flash',
       contents: [
         {
